@@ -1,6 +1,7 @@
 package com.gva.cursomcd.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.gva.cursomcd.domain.Produto;
 import com.gva.cursomcd.repository.ProdutoRepository;
@@ -18,4 +19,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    public Produto findById(Integer id){
+        Optional<Produto> obj = produtoRepository.findById(id);
+        return obj.orElse(null);
+    }
 }
