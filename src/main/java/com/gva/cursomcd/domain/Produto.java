@@ -2,7 +2,9 @@ package com.gva.cursomcd.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -41,6 +46,19 @@ public class Produto implements Serializable{
         joinColumns = @JoinColumn(name = "PRODUTO_ID"),
         inverseJoinColumns = @JoinColumn(name = "CATEGORIA_ID"))
     private List<Categoria> categorias = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
+
+    @JsonIgnore
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
+        for(ItemPedido item : itens){
+            lista.add(item.getId().getPedido());
+        }
+        return lista;
+    }
 
     @Builder
     public Produto(Integer id, String nome, Double preco) {
