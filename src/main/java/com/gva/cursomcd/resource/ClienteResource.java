@@ -1,8 +1,6 @@
 package com.gva.cursomcd.resource;
 
-import com.gva.cursomcd.domain.Categoria;
 import com.gva.cursomcd.domain.Cliente;
-import com.gva.cursomcd.service.CategoriaService;
 import com.gva.cursomcd.service.ClienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;

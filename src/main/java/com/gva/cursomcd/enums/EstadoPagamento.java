@@ -2,10 +2,11 @@ package com.gva.cursomcd.enums;
 
 import lombok.Getter;
 
-public enum TipoCliente {
-    
-    PESSOAFISICA(1, "Pessoa Física"),
-    PESSOAJURIDICA(2, "Pessoa Jurídica");
+public enum EstadoPagamento {
+
+    PENDENTE(1, "Pendente"),
+    QUITADO(2, "Quitado"),
+    CANCELADO(3, "Cancelado");
 
     @Getter
     private int cod;
@@ -13,14 +14,14 @@ public enum TipoCliente {
     @Getter
     private String descricao;
 
-    private TipoCliente(int cod, String descricao) {
+    private EstadoPagamento(int cod, String descricao) {
         this.cod = cod;
         this.descricao = descricao;
     }
     
-    public static TipoCliente toEnum(Integer cod){
+    public static EstadoPagamento toEnum(Integer cod){
         if(cod == null) return null;
-        for(TipoCliente tipo: TipoCliente.values()){
+        for(EstadoPagamento tipo: EstadoPagamento.values()){
             if(tipo.getCod() == cod) return tipo;
         }
         throw new IllegalArgumentException("Tipo não encontrado para o ID: " + cod);
