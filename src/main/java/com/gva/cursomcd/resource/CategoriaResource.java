@@ -2,8 +2,10 @@ package com.gva.cursomcd.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.gva.cursomcd.domain.Categoria;
+import com.gva.cursomcd.dto.CategoriaDTO;
 import com.gva.cursomcd.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,10 @@ public class CategoriaResource {
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll(){
+    public ResponseEntity<List<CategoriaDTO>> findAll(){
         List<Categoria> categorias = categoriaService.findAll();
-        if(categorias != null){
-            return ResponseEntity.ok().body(categorias);
-        }
-        else return ResponseEntity.notFound().build();
+        List<CategoriaDTO> categoriasDTO = categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(categoriasDTO);
     }
 
     @GetMapping("/{id}")

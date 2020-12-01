@@ -19,11 +19,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public List<Categoria> findAll(){
-        List<Categoria> categorias = categoriaRepository.findAll();
-        if(categorias.size() > 0){
-            return categorias;
-        }
-        else return null;
+        return categoriaRepository.findAll();
     }
 
     public Categoria findById(Integer id){
