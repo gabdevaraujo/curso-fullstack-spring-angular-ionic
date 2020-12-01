@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import com.gva.cursomcd.domain.Categoria;
 import com.gva.cursomcd.dto.CategoriaDTO;
 import com.gva.cursomcd.service.CategoriaService;
@@ -62,7 +64,8 @@ public class CategoriaResource {
     //Chama o service para inserção de uma nova categoria passando a categoria vinda no body da requisição
     //Para devolver a resposta correta que no caso é 201 CREATED temos que passar a URI da nova categoria criada por iSsso o encadeamento de métodos
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
+        Categoria obj = categoriaService.fromDTO(objDto);
         obj = categoriaService.insert(obj);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
@@ -74,7 +77,8 @@ public class CategoriaResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
+        Categoria obj = categoriaService.fromDTO(objDto);
         obj.setId(id);
         obj = categoriaService.update(obj);
         return ResponseEntity.noContent().build();
