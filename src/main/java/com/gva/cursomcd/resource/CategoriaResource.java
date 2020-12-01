@@ -1,14 +1,14 @@
 package com.gva.cursomcd.resource;
 
 import java.net.URI;
-
-import javax.xml.ws.Response;
+import java.util.List;
 
 import com.gva.cursomcd.domain.Categoria;
 import com.gva.cursomcd.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,15 @@ public class CategoriaResource {
     
     @Autowired
     private CategoriaService categoriaService;
+
+    @GetMapping
+    public ResponseEntity<List<Categoria>> findAll(){
+        List<Categoria> categorias = categoriaService.findAll();
+        if(categorias != null){
+            return ResponseEntity.ok().body(categorias);
+        }
+        else return ResponseEntity.notFound().build();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> findById(@PathVariable Integer id){
@@ -43,7 +52,7 @@ public class CategoriaResource {
         obj = categoriaService.insert(obj);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
-            .path("/{id}").path("/minharola").path("/meuPau")
+            .path("/{id}")
             .buildAndExpand(obj.getId())
             .toUri();
 
@@ -54,6 +63,12 @@ public class CategoriaResource {
     public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
         obj.setId(id);
         obj = categoriaService.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Categoria> deleteById(@PathVariable Integer id){
+        categoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

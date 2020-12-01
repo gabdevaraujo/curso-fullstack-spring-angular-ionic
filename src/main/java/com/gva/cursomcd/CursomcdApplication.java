@@ -3,8 +3,6 @@ package com.gva.cursomcd;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import javax.persistence.EntityManager;
-
 import com.gva.cursomcd.domain.Categoria;
 import com.gva.cursomcd.domain.Cidade;
 import com.gva.cursomcd.domain.Cliente;
