@@ -46,12 +46,6 @@ public class ClienteService {
 		return clienteRepository.save(newObj);
 	}
 
-    //Atualiza newObj com os dados vindos apenas do front que estão em obj
-	private void updateData(Cliente newObj, Cliente obj) {
-        newObj.setNome(obj.getNome());
-        newObj.setEmail(obj.getEmail());
-    }
-
     public void delete(Integer id) {
         findById(id);
         try{
@@ -70,6 +64,12 @@ public class ClienteService {
 
     public Cliente fromDTO(ClienteDTO objDto){
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+    }
+
+     //Atualiza newObj com os dados vindos apenas do front que estão em obj
+	private void updateData(Cliente newObj, Cliente obj) {
+        newObj.setNome(obj.getNome());
+        newObj.setEmail(obj.getEmail());
     }
     
 }
