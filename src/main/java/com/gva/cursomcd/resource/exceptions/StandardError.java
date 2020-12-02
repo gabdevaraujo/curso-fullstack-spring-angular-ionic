@@ -36,7 +36,7 @@ public class StandardError implements Serializable{
     }
 
 
-    //
+    //Converte e Formata o timestamp de milisegundos para o padrão dd/MM/yyyy HH:mm
     public String getFormattedInstant(Long timeStamp){
         LocalDateTime data = LocalDateTime.now();
         return String.valueOf(data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
