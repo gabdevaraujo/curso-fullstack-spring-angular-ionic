@@ -66,7 +66,7 @@ public class ClienteService {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
     }
 
-     //Atualiza newObj com os dados vindos apenas do front que estão em obj
+    // Atualiza newObj com os dados vindos apenas do front que estão em obj
 	private void updateData(Cliente newObj, Cliente obj) {
         newObj.setNome(obj.getNome());
         newObj.setEmail(obj.getEmail());

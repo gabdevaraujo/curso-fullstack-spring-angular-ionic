@@ -39,8 +39,11 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-        findById(obj.getId());
-		return categoriaRepository.save(obj);
+        //Busca uma Categoria no BD e atribui a newObj
+        Categoria newObj = findById(obj.getId());
+        //Chama updateData passando os dois objetos, os dados que vieram do front continuam em obj e o objeto newObj está com os dados do BD
+        updateData(newObj, obj);
+		return categoriaRepository.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -63,6 +66,9 @@ public class CategoriaService {
         return new Categoria(objDto.getId(), objDto.getNome());
     }
 
-    //PageRequest pageRequest = PageRequest.of(Integer page, size)
+    // Atualiza newObj com os dados vindos apenas do front que estão em obj
+	private void updateData(Categoria newObj, Categoria obj) {
+        newObj.setNome(obj.getNome());
+    }
 
 }
