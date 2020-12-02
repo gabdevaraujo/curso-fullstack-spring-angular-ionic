@@ -32,11 +32,12 @@ public class StandardError implements Serializable{
         this.status = status;
         this.msg = msg;
         this.timeStamp = timeStamp;
-        this.momento = getTimeStamp(timeStamp);
+        this.momento = getFormattedInstant(timeStamp);
     }
 
 
-    public String getTimeStamp(Long timeStamp){
+    //
+    public String getFormattedInstant(Long timeStamp){
         LocalDateTime data = LocalDateTime.now();
         return String.valueOf(data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     }
