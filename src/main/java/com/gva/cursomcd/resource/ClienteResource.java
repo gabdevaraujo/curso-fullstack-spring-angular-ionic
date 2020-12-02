@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.gva.cursomcd.domain.Cliente;
 import com.gva.cursomcd.dto.ClienteDTO;
+import com.gva.cursomcd.dto.ClienteNewDTO;
 import com.gva.cursomcd.service.ClienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class ClienteResource {
     //Chama o service para inserção de uma nova cliente passando a cliente vinda no body da requisição
     //Para devolver a resposta correta que no caso é 201 CREATED temos que passar a URI da nova cliente criada por iSsso o encadeamento de métodos
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto){
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
         Cliente obj = clienteService.fromDTO(objDto);
         obj = clienteService.insert(obj);
         URI uri = ServletUriComponentsBuilder

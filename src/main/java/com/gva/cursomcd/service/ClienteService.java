@@ -1,11 +1,19 @@
 package com.gva.cursomcd.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import com.gva.cursomcd.domain.Cidade;
 import com.gva.cursomcd.domain.Cliente;
+import com.gva.cursomcd.domain.Endereco;
 import com.gva.cursomcd.dto.ClienteDTO;
+import com.gva.cursomcd.dto.ClienteNewDTO;
+import com.gva.cursomcd.enums.TipoCliente;
 import com.gva.cursomcd.repository.ClienteRepository;
+import com.gva.cursomcd.repository.EnderecoRepository;
 import com.gva.cursomcd.service.exceptions.DataIntegrityException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +29,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     public Cliente findById(Integer id){
         Optional<Cliente> obj = clienteRepository.findById(id);
         
@@ -34,7 +45,9 @@ public class ClienteService {
 
 	public Cliente insert(Cliente obj) {
         obj.setId(null);
-		return clienteRepository.save(obj);
+        obj = clienteRepository.save(obj);
+        enderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
 	}
 
     //Atualiza um cliente
@@ -66,10 +79,22 @@ public class ClienteService {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
     }
 
+    public Cliente fromDTO(@Valid ClienteNewDTO objDto) {
+        Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
+        Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, new Cidade(objDto.getCidadeId(), null, null));
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objDto.getTelefone1());
+        if(objDto.getTelefone2() != null) cli.getTelefones().add(objDto.getTelefone2());
+        if(objDto.getTelefone3() != null) cli.getTelefones().add(objDto.getTelefone3());
+        return cli;
+    }
+    
     // Atualiza newObj com os dados vindos apenas do front que estão em obj
 	private void updateData(Cliente newObj, Cliente obj) {
         newObj.setNome(obj.getNome());
         newObj.setEmail(obj.getEmail());
     }
+
+	
     
 }
