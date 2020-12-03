@@ -4,6 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.gva.cursomcd.domain.Cliente;
+import com.gva.cursomcd.service.validation.ClienteUpdate;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -14,6 +15,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ClienteUpdate
 public class ClienteDTO {
 
     @Getter
