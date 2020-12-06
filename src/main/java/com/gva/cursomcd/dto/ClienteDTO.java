@@ -39,4 +39,6 @@ public class ClienteDTO {
         this.nome = obj.getNome();
         this.email = obj.getEmail();
     }
+
+    
 }
