@@ -3,6 +3,8 @@ package com.gva.cursomcd.config;
 import java.text.ParseException;
 
 import com.gva.cursomcd.service.DBService;
+import com.gva.cursomcd.service.EmailService;
+import com.gva.cursomcd.service.SmtpEmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,5 +31,10 @@ public class DevConfig {
         
         dbService.instantiateTestDatabse();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }
